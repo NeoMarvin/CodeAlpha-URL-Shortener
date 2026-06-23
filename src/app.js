@@ -1,16 +1,11 @@
 const express = require("express");
-
+const urlRoutes = require("./routes/urlRoutes");
 const app = express();
-const router = express.Router()
 
 
 app.use(express.json());
 
 
-app.get("/", (req, res) => {
-    res.json({
-        message: "URL Shortener API Running"
-    })
-})
+app.use("/api/urls", urlRoutes);
 
 module.exports = app;
