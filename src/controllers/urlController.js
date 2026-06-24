@@ -17,6 +17,23 @@ async function createShortUrl(req, res) {
     }
 };
 
+async function getAllUrls(req, res) {
+    try {
+        const urls = await urlService.getAllUrls()
+
+        res.status(200).json({
+            success: true,
+            data: urls
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
 module.exports = {
-    createShortUrl
+    createShortUrl,
+    getAllUrls
 };

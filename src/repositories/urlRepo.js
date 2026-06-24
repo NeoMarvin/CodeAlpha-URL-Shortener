@@ -4,4 +4,8 @@ async function createUrl(data) {
     return await Url.create(data);
     
 }
-module.exports = { createUrl };
+
+async function getUrls() {
+    return await Url.find();
+}
+module.exports = { createUrl, getUrls };

@@ -14,6 +14,12 @@ async function createShortUrl(data) {
     return newUrl
 }
 
+async function getAllUrls() {
+     const allUrls = await urlRepo.getUrls()
+
+     return allUrls
+}
 module.exports = {
-    createShortUrl
+    createShortUrl,
+    getAllUrls
 };
