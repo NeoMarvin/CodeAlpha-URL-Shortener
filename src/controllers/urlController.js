@@ -7,7 +7,7 @@ const createShortUrl = asyncWrapper(async (req, res) => {
 
     res.status(201).json({
         success: true,
-        message: "User Created Successfully",
+        message: "Short URL Created Successfully",
         data: result
     });
 });
