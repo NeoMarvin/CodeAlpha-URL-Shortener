@@ -1,37 +1,26 @@
 const urlService = require("../services/urlService");
+const asyncWrapper = require("../utils/asyncWrapper");
 
-async function createShortUrl(req, res) {
-    try {
-        const result = await urlService.createShortUrl(req.body);
 
-        res.status(201).json({
-            success: true,
-            message: "Short URL Created",
-            data: result
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
-};
+const createShortUrl = asyncWrapper(async (req, res) => {
+    const result = await urlService.createShortUrl(req.body);
 
-async function getAllUrls(req, res) {
-    try {
-        const urls = await urlService.getAllUrls()
+    res.status(201).json({
+        success: true,
+        message: "User Created Successfully",
+        data: result
+    });
+});
 
-        res.status(200).json({
-            success: true,
-            data: urls
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        })
-    }
-}
+
+const getAllUrls = asyncWrapper(async (req, res) => {
+    const urls = await urlService.getAllUrls();
+
+    res.status(200).json({
+        success: true,
+        data: urls
+    });
+})
 
 module.exports = {
     createShortUrl,
