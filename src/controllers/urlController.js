@@ -22,7 +22,14 @@ const getAllUrls = asyncWrapper(async (req, res) => {
     });
 })
 
+const redirectUrl = asyncWrapper(async (req, res) => {
+    const originalUrl = await urlService.redirectUrl(req.params.shortCode);
+
+    res.redirect(originalUrl);
+})
+
 module.exports = {
     createShortUrl,
-    getAllUrls
+    getAllUrls,
+    redirectUrl
 };

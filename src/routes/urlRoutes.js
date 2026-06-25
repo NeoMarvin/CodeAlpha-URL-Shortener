@@ -6,4 +6,5 @@ router.post("/", urlController.createShortUrl);
 
 router.get("/", urlController.getAllUrls);
 
+router.get("/:shortCode", urlController.redirectUrl);
 module.exports = router;

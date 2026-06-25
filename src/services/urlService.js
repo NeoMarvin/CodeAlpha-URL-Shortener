@@ -1,5 +1,6 @@
 const urlRepo = require("../repositories/urlRepo");
 const { nanoid } = require("nanoid");
+const AppError = require("../utils/AppError");
 
 async function createShortUrl(data) {
     const { originalUrl } = data;
@@ -19,7 +20,20 @@ async function getAllUrls() {
 
      return allUrls
 }
+
+async function redirectUrl(shortCode) {
+    const url = await urlRepo.getUrlByShortCode(shortCode);
+
+    if (!url) {
+        throw new AppError("Short URL not found", 404);
+    }
+    
+    const clicks = await urlRepo.incrementClicks(url._id);
+
+    return url.originalUrl
+}
 module.exports = {
     createShortUrl,
-    getAllUrls
+    getAllUrls,
+    redirectUrl
 };
