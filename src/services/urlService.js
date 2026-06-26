@@ -3,13 +3,30 @@ const { nanoid } = require("nanoid");
 const AppError = require("../utils/AppError");
 
 async function createShortUrl(data) {
-    const { originalUrl } = data;
+    const { originalUrl, shortCode: customShortCode, expiresAt } = data;
 
-    const shortCode = nanoid(7);
+    let shortCode;
 
+     if (customShortCode) {
+        const existingShortCode = await urlRepo.getUrlByShortCode(customShortCode);
+
+        if (existingShortCode) {
+            throw new AppError("Short code already exists", 409);
+        }
+
+        shortCode = customShortCode
+     } else {
+        shortCode = nanoid(7)
+     }
+
+    
+    if (expiresAt && new Date(expiresAt) <= new Date()) {
+        throw new AppError("Expiration date must be in the future.", 400);
+}
     const newUrl = await urlRepo.createUrl({
         originalUrl,
-        shortCode
+        shortCode,
+        expiresAt
     });
 
     return newUrl
@@ -28,6 +45,10 @@ async function redirectUrl(shortCode) {
         throw new AppError("Short URL not found", 404);
     }
     
+    if (url.expiresAt && new Date > url.expiresAt) {
+        throw new AppError("This short URL has Expired.", 410);
+        
+    }
     const clicks = await urlRepo.incrementClicks(url._id);
 
     return url.originalUrl
