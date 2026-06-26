@@ -28,8 +28,19 @@ const redirectUrl = asyncWrapper(async (req, res) => {
     res.redirect(originalUrl);
 })
 
+
+const deleteUrl = asyncWrapper(async (req, res) => {
+    const removed = await urlService.deleteUrl(req.params.shortCode);
+
+    res.status(200).json({
+        success: true,
+        message: "URL  deleted",
+        data: removed
+    });
+})
 module.exports = {
     createShortUrl,
     getAllUrls,
-    redirectUrl
+    redirectUrl,
+    deleteUrl
 };

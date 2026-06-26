@@ -32,8 +32,21 @@ async function redirectUrl(shortCode) {
 
     return url.originalUrl
 }
+
+async function deleteUrl(shortCode) {
+    const deletedUrl = await urlRepo.deleteUrlByShortCode(shortCode);
+
+    if (!deletedUrl) {
+        throw new AppError("Short URL not found", 404);
+    }
+
+    return deletedUrl
+}
+
+
 module.exports = {
     createShortUrl,
     getAllUrls,
-    redirectUrl
+    redirectUrl,
+    deleteUrl
 };

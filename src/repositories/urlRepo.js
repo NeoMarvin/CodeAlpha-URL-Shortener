@@ -20,4 +20,10 @@ async function incrementClicks(id) {
         { new: true }
     );
 }
-module.exports = { createUrl, getUrls, getUrlByShortCode, incrementClicks };
+
+async function deleteUrlByShortCode(shortCode) {
+    return await Url.findOneAndDelete( { shortCode } )
+}
+
+
+module.exports = { createUrl, getUrls, getUrlByShortCode, incrementClicks, deleteUrlByShortCode };
