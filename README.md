@@ -102,6 +102,14 @@ url-shortener/
 └── CodeAlpha_URL_Shortener_Postman_Collection.json
 ```
 
+## 🌐 Live API
+
+**Base URL**
+
+```
+https://codealpha-url-shortener-kfvy.onrender.com
+```
+
 ---
 
 ## ⚙️ Installation
